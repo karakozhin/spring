@@ -9,6 +9,22 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Smartphone {
 
     @Id
-    private int id;
+    private String id;
     private String nameOfSmartphone;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getNameOfSmartphone() {
+        return nameOfSmartphone;
+    }
+
+    public void setNameOfSmartphone(String nameOfSmartphone) {
+        this.nameOfSmartphone = nameOfSmartphone;
+    }
 }
