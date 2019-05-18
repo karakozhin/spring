@@ -26,6 +26,8 @@ public class SmartphoneController {
         return smartphone;
     }
 
+
+
     @PostMapping("/save")
     public String saveSmartphone(@RequestBody Smartphone smartphone) {
         smartphoneRepository.save(smartphone);
