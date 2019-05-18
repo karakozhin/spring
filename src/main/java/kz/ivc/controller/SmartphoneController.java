@@ -13,33 +13,40 @@ import java.util.Optional;
 public class SmartphoneController {
 
     @Autowired
-    SmartphoneRepository smartphoneRepository;
+    SmartphoneRepository repository;
 
     @GetMapping("/list")
-    public List<Smartphone> getSmartphones() {
-        return smartphoneRepository.findAll();
+    public List<Smartphone> getSmart(){
+        return repository.findAll();
     }
 
     @GetMapping("/{id}")
-    public Smartphone getSmartphone(@PathVariable String id ) {
-        Smartphone smartphone = smartphoneRepository.findOne(id);
-        return smartphone;
+    public Smartphone getSmartphone(@PathVariable String id){
+        return repository.findOne(id);
     }
-
-
 
     @PostMapping("/save")
-    public String saveSmartphone(@RequestBody Smartphone smartphone) {
-        smartphoneRepository.save(smartphone);
-        return "Added smartphone with id: " + smartphone.getId();
+    public String saveSmartphone(@RequestBody Smartphone smartphone){
+        repository.save(smartphone);
+        return "Smartphone with id: " + smartphone.getId() + " added";
     }
 
-
+    @PutMapping("/{id}")
+    public String updateSmartphone(@PathVariable String id, @RequestBody Smartphone newSmartphone){
+        Optional<Smartphone> smartphoneOptional = Optional.ofNullable(repository.findOne(id));
+        if(smartphoneOptional.isPresent()){
+            Smartphone currentSmartphone = smartphoneOptional.get();
+            currentSmartphone.setNameOfSmartphone(newSmartphone.getNameOfSmartphone());
+            repository.save(currentSmartphone);
+            return "Smartphone with id: " + currentSmartphone.getId() + " updated";
+        }
+        return id;
+    }
 
     @DeleteMapping("/delete/{id}")
-    public String deleteSmartphone(@PathVariable String id) {
-        smartphoneRepository.delete(id);
-        return "Deleted smartphone with id: " + id;
+    public String deleteSmartphone(@PathVariable String id){
+        repository.delete(id);
+        return "Smartphone with id: " + id + " deleted";
     }
 
 }
